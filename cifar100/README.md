@@ -1,6 +1,6 @@
 ## one machine, multi-gpu training on CIFAR100 dataset 
 
-####run multi-gpu train:
+#### run multi-gpu train:
 
 CUDA_VISIBLE_DEVICES='0,1' python cifar100_multi_gpu_train.py --data_dir <cifar100-data> --num_gpus 2 --max_steps=1000 --train_dir <train-dir> --log_dir <log-dir>
 
