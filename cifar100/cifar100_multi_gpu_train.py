@@ -51,22 +51,24 @@ import cifar100
 
 import logging
 
-FORMAT = '%(asctime)-15s %(message)s'
-logfile = './log/cifar100-multi-gpu-bench' + datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S') + '.log'
-logging.basicConfig(format=FORMAT,filename=logfile,level='INFO')
-logger = logging.getLogger('log')
-
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('train_dir', '/tmp/cifar100_train',
                            """Directory where to write event logs """
                            """and checkpoint.""")
+tf.app.flags.DEFINE_string('log_dir', '/tmp/cifar100_log',
+                           """Directory where to write logs """)
 tf.app.flags.DEFINE_integer('max_steps', 1000000,
                             """Number of batches to run.""")
 tf.app.flags.DEFINE_integer('num_gpus', 1,
                             """How many GPUs to use.""")
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
+
+FORMAT = '%(asctime)-15s %(message)s'
+logfile = FLAGS.log_dir + '/cifar100-multi-gpu-bench' + datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S') + '.log'
+logging.basicConfig(format=FORMAT,filename=logfile,level='INFO')
+logger = logging.getLogger('log')
 
 
 def tower_loss(scope, images, labels):
