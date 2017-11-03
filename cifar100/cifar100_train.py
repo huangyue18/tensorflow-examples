@@ -42,25 +42,26 @@ import time
 import tensorflow as tf
 import cifar100
 
-import logging
+# import logging
 
-FORMAT = '%(asctime)-15s %(message)s'
-logfile = './log/cifar100-single-gpu-bench' + datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S') + '.log'
-logging.basicConfig(format=FORMAT,filename=logfile,level='INFO')
-logger = logging.getLogger('log')
 
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('train_dir', '/tmp/cifar100_train',
                            """Directory where to write event logs """
                            """and checkpoint.""")
+# tf.app.flags.DEFINE_string('log_dir', '/tmp/cifar100_log',
+#                            """Directory where to write logs """)
 tf.app.flags.DEFINE_integer('max_steps', 10000,
                             """Number of batches to run.""")
-tf.app.flags.DEFINE_boolean('log_device_placement', False,
+tf.app.flags.DEFINE_boolean('log_device_placement', True,
                             """Whether to log device placement.""")
 tf.app.flags.DEFINE_integer('log_frequency', 10,
                             """How often to log results to the console.""")
-
+# FORMAT = '%(asctime)-15s %(message)s'
+# logfile = FLAGS.log_dir + '/cifar100-multi-gpu-bench' + datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S') + '.log'
+# logging.basicConfig(format=FORMAT, filename=logfile, level='INFO')
+# logger = logging.getLogger('log')
 
 def train():
   """Train CIFAR-100 for a number of steps."""
@@ -128,8 +129,8 @@ def train():
 
       t2 = time.time()
       print('spent %f seconds to train %d step' % (t2-t1, FLAGS.max_steps))
-      logger.info('spent %f seconds to train %d step' % (t2-t1, FLAGS.max_steps))
-      logger.info('last loss value: %.2f ' % loghook.last_loss())
+      print('spent %f seconds to train %d step' % (t2-t1, FLAGS.max_steps))
+      print('last loss value: %.2f ' % loghook.last_loss())
 
 def main(argv=None):  # pylint: disable=unused-argument
   cifar100.maybe_download_and_extract()
